@@ -35,7 +35,7 @@ A modern, intelligent travel guide application built with Next.js, TypeScript, T
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - RapidAPI account with Travel Advisor API subscription
 
@@ -43,8 +43,8 @@ A modern, intelligent travel guide application built with Next.js, TypeScript, T
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
-cd project_travel_advisor
+git clone https://github.com/ruhulaminparvez/ai-tour-guide-web.git
+cd ai-tour-guide-web
 ```
 
 2. Install dependencies:
