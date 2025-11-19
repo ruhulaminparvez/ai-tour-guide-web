@@ -31,6 +31,9 @@ A modern, intelligent travel guide application built with Next.js, TypeScript, T
 - **Maps**: React Leaflet
 - **API**: Travel Advisor API v2 (RapidAPI), OpenWeatherMap API (via RapidAPI)
 
+## Live Demo
+- [AI Tour Guide](https://ai-tour-guide-web.vercel.app)
+
 ## Getting Started
 
 ### Prerequisites
