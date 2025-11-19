@@ -26,17 +26,17 @@ export default function Home() {
   const [rating, setRating] = useState<string>('');
   const [coords, setCoords] = useState<Coordinates>({ lat: 0, lng: 0 });
   const [bounds, setBounds] = useState<Bounds | null>(null);
-  const [weatherData, setWeatherData] = useState<any>(null);
+  const [weatherData, setWeatherData] = useState<{
+    list?: Array<{
+      main?: { temp?: number };
+      weather?: Array<{ icon?: string; description?: string }>;
+    }>;
+  } | null>(null);
   const [filteredPlaces, setFilteredPlaces] = useState<Place[]>([]);
   const [places, setPlaces] = useState<Place[]>([]);
   const [childClicked, setChildClicked] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [locationLoaded, setLocationLoaded] = useState<boolean>(false);
-  const [currentLocation, setCurrentLocation] = useState<{
-    name?: string;
-    locationId?: number | string;
-    placeType?: string;
-  }>({});
 
   // Get user's current location on mount
   useEffect(() => {
@@ -95,15 +95,6 @@ export default function Home() {
     }
   }, [coords, locationLoaded]);
 
-  // Create default bounds if not set
-  const getDefaultBounds = (centerLat: number, centerLng: number): Bounds => {
-    const offset = 0.1; // ~11km
-    return {
-      ne: { lat: centerLat + offset, lng: centerLng + offset },
-      sw: { lat: centerLat - offset, lng: centerLng - offset },
-    };
-  };
-
   // Fetch places when bounds or type changes
   useEffect(() => {
     if (coords.lat && coords.lng && locationLoaded && bounds) {
@@ -144,11 +135,6 @@ export default function Home() {
     if (place && place.lat && place.lng) {
       console.log('Location selected:', { name: place.name, coords: { lat: place.lat, lng: place.lng } });
       setCoords({ lat: place.lat, lng: place.lng });
-      setCurrentLocation({
-        name: place.name,
-        locationId: place.locationId,
-        placeType: place.placeType,
-      });
       // Reset places when location changes
       setPlaces([]);
       setFilteredPlaces([]);
@@ -198,7 +184,6 @@ export default function Home() {
             <Map
               setChildClicked={setChildClicked}
               setBounds={setBounds}
-              setCoords={setCoords}
               coords={coords}
               places={displayPlaces}
               weatherData={weatherData}

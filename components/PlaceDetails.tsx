@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, MapPin, Phone, Globe, Award, UtensilsCrossed } from 'lucide-react';
 import { Place } from '@/types';

@@ -10,6 +10,7 @@ import { Coordinates, Place } from '@/types';
 import { Card } from '@/components/ui/card';
 
 // Fix for default marker icons in Leaflet
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
@@ -20,10 +21,14 @@ L.Icon.Default.mergeOptions({
 interface MapProps {
   coords: Coordinates;
   places: Place[];
-  setCoords: (coords: Coordinates) => void;
   setBounds: (bounds: { ne: Coordinates; sw: Coordinates }) => void;
   setChildClicked: (index: number | null) => void;
-  weatherData: any;
+  weatherData: {
+    list?: Array<{
+      main?: { temp?: number };
+      weather?: Array<{ icon?: string; description?: string }>;
+    }>;
+  } | null;
 }
 
 function MapUpdater({ coords }: { coords: Coordinates }) {
@@ -80,7 +85,6 @@ function BoundsUpdater({ setBounds }: { setBounds: (bounds: { ne: Coordinates; s
 export default function Map({
   coords,
   places,
-  setCoords,
   setBounds,
   setChildClicked,
   weatherData,

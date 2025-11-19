@@ -22,7 +22,7 @@ export const searchLocationAutocomplete = async (query: string) => {
       },
     });
 
-    return data.map((item: any) => ({
+    return data.map((item: { lat: string; lon: string; display_name: string; place_id: number | string; type?: string }) => ({
       lat: parseFloat(item.lat),
       lng: parseFloat(item.lon),
       name: item.display_name,
@@ -64,8 +64,29 @@ export const getPlacesData = async (
 
     if (placesArray.length > 0) {
       return placesArray
-        .filter((item: any) => item && (item.latitude || item.lat) && (item.longitude || item.lng))
-        .map((item: any) => ({
+        .filter((item: { latitude?: number; lat?: number; longitude?: number; lng?: number }) => item && (item.latitude || item.lat) && (item.longitude || item.lng))
+        .map((item: {
+          name?: string;
+          latitude?: number;
+          lat?: number;
+          longitude?: number;
+          lng?: number;
+          rating?: number | string;
+          num_reviews?: number;
+          address?: string;
+          address_obj?: { street1?: string };
+          address_string?: string;
+          photo?: {
+            images?: {
+              large?: { url?: string };
+              original?: { url?: string };
+              medium?: { url?: string };
+            };
+          };
+          location_id?: number;
+          locationId?: number | string;
+          distance?: string | number;
+        }) => ({
           name: item.name || 'Unknown',
           latitude: item.latitude || item.lat || 0,
           longitude: item.longitude || item.lng || 0,
@@ -88,8 +109,10 @@ export const getPlacesData = async (
     }
 
     return [];
-  } catch (error: any) {
-    console.error(`Error fetching ${type}:`, error?.response?.data || error?.message || error);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown }; message?: string };
+    console.error(`Error fetching ${type}:`, axiosError?.response?.data || axiosError?.message || errorMessage);
     return [];
   }
 };
@@ -115,8 +138,10 @@ export const getWeatherData = async (lat: number | undefined, lng: number | unde
 
       return data;
     }
-  } catch (error: any) {
-    console.error('Error fetching weather data:', error?.response?.data || error?.message || error);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown }; message?: string };
+    console.error('Error fetching weather data:', axiosError?.response?.data || axiosError?.message || errorMessage);
     return null;
   }
 };

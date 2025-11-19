@@ -2,7 +2,7 @@
 
 import { useState, useEffect, createRef } from 'react';
 import { motion } from 'framer-motion';
-import { Loader2, UtensilsCrossed, Hotel, MapPin, Star } from 'lucide-react';
+import { Loader2, UtensilsCrossed, Hotel, MapPin } from 'lucide-react';
 import { Place } from '@/types';
 import PlaceDetails from './PlaceDetails';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
